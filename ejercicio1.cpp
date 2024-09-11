@@ -145,6 +145,15 @@ class Biblioteca {
         void cantLibrosAux(nodoAvl* nodo){
             std::cout << cantTotal + ' ' + cantHab + ' ' + cantInhab;
         }
+        void destruirNodo(nodoAvl * nodo){
+            if(!nodo){
+                return;
+            }
+            destruirNodo(nodo->der);
+            destruirNodo(nodo->izq);
+            delete nodo;
+            nodo = NULL;
+        }
 
         //Atributos
         nodoAvl* raiz;
@@ -170,6 +179,9 @@ class Biblioteca {
         };
         void cantLibros(){
             cantLibrosAux(raiz);
+        }
+        void eliminarAVL(){
+            destruirNodo(raiz);
         }
 
         

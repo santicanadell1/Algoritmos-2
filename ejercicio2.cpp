@@ -13,6 +13,9 @@ class Biblioteca {
             bool habilitado;
         };
         //funciones auxiliares
+        int normalizado(int c, int l){
+            return abs(c)%l;
+        }
         int funcionHash1(int c){
             return 0;
         }
@@ -21,10 +24,31 @@ class Biblioteca {
         }
         int dobleHash(int c, int i) {
         return (funcionHash1(c) + i * funcionHash2(c)) % largo;
-    }
+        }
+        void rehash(){
+            largo = largo * 2;
+            delete[] ocupado;
+            ocupado = new bool[largo]();
+            libro** nuevo = new libro*[largo];
+            for(int i = 0; i< largo/2; i++){
+                if(hash[i]){
+                    int clave = hash[i]->id;
+                    int j = 0;
+                    int bucket = dobleHash(clave,j);
+                    while(ocupado[clave]){
+                        j++;
+                        bucket = dobleHash(clave,j);
+                    }
+                    ocupado[bucket] = true;
+                    nuevo[bucket] = hash[i];
+                }
+            }
+            delete[] hash;
+            hash = nuevo;
+        }
         void insertarAux( int d , char* nombre){
             if(cantElem >= 0.5*largo){
-
+                rehash();
             }
             int intento = 0;
             int indice=dobleHash(d,intento);
