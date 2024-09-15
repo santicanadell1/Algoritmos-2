@@ -17,10 +17,10 @@ class Biblioteca {
             return abs(c)%l;
         }
         int funcionHash1(int c){
-            return 0;
+            return c % largo;
         }
         int funcionHash2(int c){
-            return 0;
+            return (c*2 % largo)+ 1;
         }
         int dobleHash(int c, int i) {
         return (funcionHash1(c) + i * funcionHash2(c)) % largo;

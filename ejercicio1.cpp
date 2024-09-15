@@ -115,7 +115,7 @@ class Biblioteca {
                 buscarAux(nodo->izq , d);
             }
             else{
-                std::cout << nodo->titulo + ' ' + nodo->habilitado?'H':'D';
+                std::cout << nodo->titulo + ' ' + nodo->habilitado?"H":"D";
             }
         }
         
