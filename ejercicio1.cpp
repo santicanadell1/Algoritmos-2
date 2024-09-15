@@ -12,7 +12,7 @@ class Biblioteca {
     private:
         struct nodoAvl{
             int id;
-            char* titulo;
+            string titulo;
             nodoAvl* der;
             nodoAvl* izq;
             int altura;
@@ -47,7 +47,7 @@ class Biblioteca {
             A->altura = 1 + max(A->der->altura,A->izq->altura);
             return A;
         }
-        nodoAvl* insertarAux(nodoAvl*nodo,int d, char* titulo){
+        nodoAvl* insertarAux(nodoAvl*nodo,int d, string titulo){
             std::cout << "inserta numero";
             if(!nodo){
                 nodoAvl* nuevo = new nodoAvl;
@@ -115,7 +115,7 @@ class Biblioteca {
                 buscarAux(nodo->izq , d);
             }
             else{
-                std::cout << nodo->titulo + ' ' + nodo->habilitado?"H":"D";
+                std::cout << nodo->titulo + " " + (nodo->habilitado ? "H":"D");
             }
         }
         
@@ -162,7 +162,7 @@ class Biblioteca {
         int cantTotal;
     public:
     //funciones publicas
-        void insertar(int d, char* titulo){
+        void insertar(int d, string titulo){
             raiz = insertarAux(raiz,d,titulo);
         }
         int altura(){
@@ -183,17 +183,41 @@ class Biblioteca {
         void eliminarAVL(){
             destruirNodo(raiz);
         }
-
+        Biblioteca(){
+            raiz = NULL;
+            cantHab = 0;
+            cantInhab = 0;
+            cantTotal =0;
+        }
         
 };
 
-int main()
-{
-    int n;
-    cin >> n;
+int main() {
+    int N;
+    cin >> N;  // Leer el número de operaciones
+    Biblioteca biblioteca;
 
-    for (int i = 0; i < n; i++) 
-    {
-        
+    for (int i = 0; i < N; ++i) {
+        string operacion;
+        cin >> operacion;
+
+        if (operacion == "ADD") {
+            int id;
+            string titulo;
+            cin >> id >> titulo;
+            biblioteca.insertar(id, titulo);
+        } else if (operacion == "FIND") {
+            int id;
+            cin >> id;
+            biblioteca.buscar(id);
+        } else if (operacion == "TOGGLE") {
+            int id;
+            cin >> id;
+            biblioteca.habilitar(id);
+        } else if (operacion == "COUNT") {
+            biblioteca.cantLibros();
+        }
     }
+
+    return 0;
 }

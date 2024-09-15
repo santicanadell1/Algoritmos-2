@@ -9,7 +9,7 @@ class Biblioteca {
     private:
         struct libro{
             int id;
-            char* titulo;
+            string titulo;
             bool habilitado;
         };
         //funciones auxiliares
@@ -46,7 +46,7 @@ class Biblioteca {
             delete[] hash;
             hash = nuevo;
         }
-        void insertarAux( int d , char* nombre){
+        void insertarAux( int d , string nombre){
             if(cantElem >= 0.5*largo){
                 rehash();
             }
@@ -78,7 +78,7 @@ class Biblioteca {
                 indice= dobleHash(d,intento);
             }
             if(hash[indice]->id == d){
-                std::cout << hash[indice]->titulo + ' ' + hash[indice]->habilitado?'H':'D';
+                std::cout << hash[indice]->titulo + " " + (hash[indice]->habilitado? "H":"D");
             }else{
                 std::cout << "libro_no_encontrado";
             }
@@ -120,8 +120,12 @@ class Biblioteca {
             largo = lar;
             hash = new libro*[lar]();
             ocupado = new bool[lar]();
+            cantElem=0;
+            cantHab = 0;
+            cantInhab = 0;
+
         }
-        void insertar(int d , char* nombre){
+        void insertar(int d , string nombre){
             insertarAux(d, nombre);
         }
         void buscar(int d){
@@ -135,8 +139,32 @@ class Biblioteca {
              cantLibrosAux();
         }
 };
-int main()
-{
-    // TODO
+int main() {
+    int N;
+    cin >> N;  // Leer el número de operaciones
+    Biblioteca biblioteca(30);
+
+    for (int i = 0; i < N; ++i) {
+        string operacion;
+        cin >> operacion;
+
+        if (operacion == "ADD") {
+            int id;
+            string titulo;
+            cin >> id >> titulo;
+            biblioteca.insertar(id, titulo);
+        } else if (operacion == "FIND") {
+            int id;
+            cin >> id;
+            biblioteca.buscar(id);
+        } else if (operacion == "TOGGLE") {
+            int id;
+            cin >> id;
+            biblioteca.habilitar(id);
+        } else if (operacion == "COUNT") {
+            biblioteca.cantLibros();
+        }
+    }
+
     return 0;
 }
