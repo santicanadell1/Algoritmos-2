@@ -1,7 +1,7 @@
 @echo off
-set executable=ejecutables/ejercicio2.exe
-set input_folder=tests/ejercicio2/
-set output_folder=out/ejercicio2/
+set executable=ejecutables\ejercicio1.exe
+set input_folder=tests/ejercicio1/
+set output_folder=out/ejercicio1/
 
 :: Lista de los archivos de prueba
 set tests=11.in.txt 100.in.txt 1000.in.txt 10000.in.txt 100000.in.txt 1000000.in.txt

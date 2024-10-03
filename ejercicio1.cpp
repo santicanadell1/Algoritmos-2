@@ -48,7 +48,6 @@ class Biblioteca {
             return A;
         }
         nodoAvl* insertarAux(nodoAvl*nodo,int d, string titulo){
-            std::cout << "inserta numero";
             if(!nodo){
                 nodoAvl* nuevo = new nodoAvl;
                 nuevo->altura = 1;
@@ -58,7 +57,7 @@ class Biblioteca {
                 nuevo->der = NULL;
                 nuevo->izq = NULL;
                 cantHab ++;
-                cantTotal;
+                cantTotal++;
                 return nuevo;
             }
             if(nodo->id < d){
@@ -106,7 +105,7 @@ class Biblioteca {
 
         void buscarAux(nodoAvl* nodo ,int d){
             if(!nodo){
-                std::cout << "libro_no_encontrado";
+                std::cout << "libro_no_encontrado" << std::endl;
             }
             else if(d > nodo->id){
                 buscarAux(nodo->der , d);
@@ -115,13 +114,13 @@ class Biblioteca {
                 buscarAux(nodo->izq , d);
             }
             else{
-                std::cout << nodo->titulo + " " + (nodo->habilitado ? "H":"D");
+                std::cout << nodo->titulo << " " << (nodo->habilitado ? "H" : "D") << std::endl;
             }
         }
         
         void habilitarAux(nodoAvl* nodo,int d){
             if(!nodo){
-               std::cout << "libro_no_encontrado"; 
+               std::cout << "libro_no_encontrado" << std::endl; 
             };
             if(nodo->id == d){
                 if(nodo->habilitado){
@@ -143,7 +142,7 @@ class Biblioteca {
         }
 
         void cantLibrosAux(nodoAvl* nodo){
-            std::cout << cantTotal + ' ' + cantHab + ' ' + cantInhab;
+            std::cout << std::to_string(cantTotal) + " " + std::to_string(cantHab) + " " + std::to_string(cantInhab) << std::endl;
         }
         void destruirNodo(nodoAvl * nodo){
             if(!nodo){
