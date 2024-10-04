@@ -123,7 +123,6 @@ class Biblioteca {
             cantElem=0;
             cantHab = 0;
             cantInhab = 0;
-
         }
         void insertar(int d , string nombre){
             insertarAux(d, nombre);
