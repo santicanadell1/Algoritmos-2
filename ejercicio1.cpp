@@ -71,7 +71,7 @@ class Biblioteca {
                 nodo->habilitado = true;
                 return nodo;
             }
-            nodo->altura = 1+max(alturaAux(nodo->izq), alturaAux(nodo->der));
+            nodo->altura = 1 + max(nodo->izq ? nodo->izq->altura : 0, nodo->der ? nodo->der->altura : 0);
             int balance = balanceAux(nodo);
             bool desbalanceDer = balance > 1;
             bool desbalanceIzq = balance < -1;
@@ -121,7 +121,8 @@ class Biblioteca {
         void habilitarAux(nodoAvl* nodo,int d){
             if(!nodo){
                std::cout << "libro_no_encontrado" << std::endl; 
-            };
+               return;
+            }
             if(nodo->id == d){
                 if(nodo->habilitado){
                 cantHab--;
@@ -165,6 +166,7 @@ class Biblioteca {
             raiz = insertarAux(raiz,d,titulo);
         }
         int altura(){
+            if(!raiz) return 0;
             return raiz->altura;
         }
         void inOrder(){
@@ -182,16 +184,23 @@ class Biblioteca {
         void eliminarAVL(){
             destruirNodo(raiz);
         }
-        Biblioteca(){
+        Biblioteca() {
             raiz = NULL;
             cantHab = 0;
             cantInhab = 0;
-            cantTotal =0;
+            cantTotal = 0;
         }
+
+       ~Biblioteca() {
+         destruirNodo(raiz);
+         raiz = NULL;
+        }
+
         
 };
 
 int main() {
+
     int N;
     cin >> N;  // Leer el número de operaciones
     Biblioteca biblioteca;

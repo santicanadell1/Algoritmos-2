@@ -89,48 +89,66 @@ class colaDePrioridad{
         int funcionHash1(int c){
             return c % largo;
         }
-        // void rehash(){
-        //     largo = largo * 2;
-        //     posicion** nuevo = new posicion*[largo];
-        //     for(int i = 0; i< largo/2; i++){
-        //         if(hash[i]){
-        //             int clave = hash[i]->id;
-        //             int bucket = funcionHash1(clave);
-        //             nuevo[bucket] = hash[i];
-        //         }
-        //     }
-        //     delete[] hash;
-        //     hash = nuevo;
-        // }
-        void insertarAux(int id, int pos){
-            if(cantElem >= 0.7*largo){
-                //rehash();
-            }
-            int indice= funcionHash1(id);
-            posicion* buck = hash[indice];
-            while(buck->sig){
-                if(buck->id == id){
-                    buck->pos = pos;
-                    break;
-                }
-                buck = buck->sig;
-            }
-                if(!buck->sig){
-                    posicion* nuevo = new posicion;
-                    nuevo->id = id;
-                    nuevo->pos = pos;
-                    nuevo->sig = NULL;
-                    buck->sig = nuevo;
-                }
-        }
-        int buscarAux(int id){
-            int indice=funcionHash1(id);
-            posicion* buck = hash[indice];
-            while(buck->sig){
-                if(buck->id == id)return buck->pos;
-                buck = buck->sig;
+
+
+    void rehash() {
+        int tamNuevo = largo * 2;
+        posicion** nuevaTabla = new posicion * [tamNuevo]();
+        posicion* aux = NULL;
+        for (int i = 0; i < largo; i++) {
+            aux = hash[i];
+            while (aux) {
+                int buck = funcionHash1(aux->id);
+                posicion* nuevo = new posicion;
+                nuevo->id = aux->id;
+                nuevo->pos = aux->pos;
+                nuevo->sig = nuevaTabla[buck];
+                nuevaTabla[buck] = nuevo;
+                aux = aux->sig;
             }
         }
+        for (int i = 0; i < largo; i++) {
+            posicion* current = hash[i];
+            while (current) {
+                posicion* next = current->sig;
+                delete current;
+                current = next;
+            }
+        }
+        delete[] hash;
+        hash = nuevaTabla;
+        largo = tamNuevo;
+        return d;
+    }
+    void insertarAux(int id, int pos){
+        if(cantElem >= 0.7*largo){
+            rehash();
+        }
+        int indice= funcionHash1(id);
+        posicion* buck = hash[indice];
+        while(buck->sig){
+            if(buck->id == id){
+                buck->pos = pos;
+                break;
+            }
+            buck = buck->sig;
+        }
+            if(!buck->sig){
+                posicion* nuevo = new posicion;
+                nuevo->id = id;
+                nuevo->pos = pos;
+                nuevo->sig = NULL;
+                buck->sig = nuevo;
+            }
+    }
+    int buscarAux(int id){
+        int indice=funcionHash1(id);
+        posicion* buck = hash[indice];
+        while(buck->sig){
+            if(buck->id == id)return buck->pos;
+            buck = buck->sig;
+        }
+    }
     public:
         colaDePrioridad(int n){
             hash = new posicion*[n]();
